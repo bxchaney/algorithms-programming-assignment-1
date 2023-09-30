@@ -16,4 +16,9 @@ target_compile_options(compiler_flags INTERFACE
 
 add_compile_options(-Wall -Werror -pedantic-errors -Wextra -Wunused)
 
+add_subdirectory(utils)
+
 add_executable(closest-pairs main.cpp)
+add_executable(test-cases tests.cpp)
+
+target_link_libraries(test-cases PUBLIC utils)
