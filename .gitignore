@@ -30,3 +30,12 @@
 *.exe
 *.out
 *.app
+
+# Ignoring Python venv
+bin/*
+lib/*
+lib64
+pyvenv.cfg
+
+# Ignoring build folder
+build/*
