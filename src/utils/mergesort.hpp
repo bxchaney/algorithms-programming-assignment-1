@@ -5,7 +5,6 @@
 
 template <typename T>
 void merge(T* arr, int l, int m, int r, bool (*leq)(T*, T*)) {
-    std::cout << "l: " << l << "m: " << m << "r: " << r << std::endl;
     int i, j, k, nl, nr;
     nl = m - l + 1;
     nr = r - m;
