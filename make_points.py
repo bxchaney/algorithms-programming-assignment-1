@@ -27,8 +27,9 @@ def main(argv: list[str]):
         return -1
 
     for _ in range(number_of_points):
-        print(f"{randint(0,point_range)},{randint(0,point_range)}")
+        print(f"{randint(0,point_range)} {randint(0,point_range)}")
     return 0
+
 
 if __name__ == "__main__":
     main(sys.argv)
