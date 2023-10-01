@@ -56,7 +56,7 @@ class Stack {
     /// @tparam T type of parameter.
     /// @param value the value being added to the stack.
     void push(const T &value) {
-        node_pointer new_node = new Node(value);
+        node_pointer new_node{new Node(value)};
         if (!_head) {
             _head = new_node;
         } else {
@@ -69,11 +69,11 @@ class Stack {
 
     /// @brief returns and removes the last value of the stack.
     /// @tparam T type of parameter.
-    /// @return the value at the top of the stack. Throws an exception when the
-    /// stack is empty.
+    /// @return the value at the top of the stack. Throws an exception when
+    /// the stack is empty.
     value_type pop() {
         if (!_head) throw std::exception();
-        value_type data = _head->data;
+        value_type data{_head->data};
         node_pointer old_node = _head;
         _head = _head->next;
         old_node->~Node();
@@ -102,7 +102,8 @@ class Queue {
     using reference = T &;
     using const_reference = const T &;
 
-    node_pointer _head, _tail;
+    node_pointer _head;
+    node_pointer _tail;
     size_t _size;
 
  public:
@@ -113,7 +114,7 @@ class Queue {
     ~Queue() {
         // Iteritively delete each node in Queue.
         while (_head) {
-            node_pointer curr = _head;
+            node_pointer curr{_head};
             _head = _head->next;
             curr->~Node();
         }
@@ -144,7 +145,7 @@ class Queue {
         _tail = nullptr;
         _size = 0;
 
-        node_pointer curr_node = other._head;
+        node_pointer curr_node{other._head};
         while (curr_node) {
             enqueue(curr_node->data);
             curr_node = curr_node->next;
@@ -156,7 +157,7 @@ class Queue {
     /// @tparam T type of elements in the queue.
     /// @param data value being added to the queue.
     void enqueue(value_type data) {
-        node_pointer new_node = new Node<T>(data);
+        node_pointer new_node{new Node<T>(data)};
 
         // Queue is empty
         if (_head == nullptr) {
@@ -176,7 +177,7 @@ class Queue {
     /// @return front element of the queue.
 
     value_type dequeue() {
-        node_pointer node = _head;
+        node_pointer node{_head};
 
         // one node remaining
         if (_head == _tail) {
@@ -185,7 +186,7 @@ class Queue {
             _head = _head->next;
             _head->prev = nullptr;
         }
-        value_type data = node->data;
+        value_type data{node->data};
         node->~Node();
         _size--;
         return data;
@@ -195,6 +196,25 @@ class Queue {
     /// @tparam T the type of elements in the queue.
     /// @return
     size_t size() { return _size; }
+
+    /// @brief Returns a pointer to an array with a copy of the queue's contents
+    /// @return a pointer to a new array. The caller gets ownership of this
+    /// array.
+    value_type *to_array() {
+        // if size is 0, return a nullptr
+        if (size() == 0) return nullptr;
+
+        // make a new array of the contained type
+        value_type *arr{new value_type[size()]};
+        node_pointer curr_node{_head};
+        unsigned int i{0};
+        while (curr_node) {
+            if (i == size()) break;
+            arr[i++] = curr_node->data;
+            curr_node = curr_node->next;
+        }
+        return arr;
+    }
 
     /// @brief ostream operator overloaded to support printing of Queue<T>
     /// objects.

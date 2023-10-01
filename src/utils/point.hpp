@@ -13,13 +13,12 @@
 template <typename T>
 class Point {
  public:
-    typedef T value_type;
-    typedef T *pointer_type;
-    typedef T &reference;
-    typedef const T &const_reference;
+    using value_type = T;
 
     value_type x;
     value_type y;
+
+    Point() = default;
 
     Point(value_type x, value_type y) {
         this->x = x;
@@ -34,9 +33,27 @@ class Point {
         this->y = other.y;
     }
 
-    Point operator=(const Point &other) {
+    // move constructor
+    Point(Point &&other) {
         this->x = other.x;
         this->y = other.y;
+        other = Point();
+    }
+
+    // assignment copy
+    Point &operator=(const Point &other) {
+        this->x = other.x;
+        this->y = other.y;
+        return *this;
+    }
+
+    // move assignment
+    Point &operator=(Point &&other) {
+        // returning reference to self when moving
+        this->x = other.x;
+        this->y = other.y;
+        other = Point();
+        return *this;
     }
 
     template <typename U>

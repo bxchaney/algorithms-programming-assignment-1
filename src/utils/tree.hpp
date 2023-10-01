@@ -70,7 +70,6 @@ class Tree {
     node_pointer root;
     int _size;
 
-    reference get(reference);
 
     /// @brief updates the height of a node by taking the max height of its
     /// children and adding 1
@@ -149,7 +148,7 @@ class Tree {
     /// @param node the node being rotated about
     void rotate_right(node_pointer node) {
         // assume that the left child is non-null
-        node_pointer left_right_child = node->left->right;
+        node_pointer left_right_child {node->left->right};
         if (node->parent != nullptr) {
             replace_child(node->parent, node, node->left);
         } else {
@@ -165,7 +164,7 @@ class Tree {
     /// @param node the node being rotated about
     void rotate_left(node_pointer node) {
         // assume that the right child is non-null
-        node_pointer right_left_child = node->right->left;
+        node_pointer right_left_child {node->right->left};
         if (node->parent != nullptr) {
             replace_child(node->parent, node, node->right);
         } else {
@@ -223,9 +222,9 @@ class Tree {
             return;
         }
 
-        node_pointer node = new TreeNode(t);
+        node_pointer node {new TreeNode(t)};
 
-        node_pointer curr = root;
+        node_pointer curr {root};
         // searching for a place to insert the new node
         while (curr != nullptr) {
             if (t < curr->data) {
@@ -263,7 +262,7 @@ class Tree {
             return false;
         }
 
-        node_pointer curr = root;
+        node_pointer curr {root};
         while (curr != nullptr) {
             if (curr->data == t) {
                 return true;
