@@ -39,3 +39,6 @@ pyvenv.cfg
 
 # Ignoring build folder
 build/*
+
+# Ignoreing vscode
+.vscode/
