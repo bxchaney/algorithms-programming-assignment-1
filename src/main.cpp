@@ -40,7 +40,7 @@ int main(int argc, char** argv) {
         return -1;
     }
 
-    Queue<Point<uint16_t>> q{};
+    ArrayQueue<Point<uint16_t>> q{};
 
     read_points(ifs, &q);
 
@@ -49,7 +49,7 @@ int main(int argc, char** argv) {
     //    get_closest_points(p, (int)q.size());
 
     ArrayList<PointPair>* pp{
-        divide_and_conquer_closest_pairs(p, static_cast<int>(q.size()), 10)};
+        divide_and_conquer_closest_pairs(p, static_cast<int>(q.size()), 20)};
 
     std::cout << pp->size() << std::endl;
     for (int i = 0; i < static_cast<int>(pp->size()); i++) {
