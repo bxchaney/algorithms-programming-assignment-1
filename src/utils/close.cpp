@@ -81,6 +81,7 @@ void insert_in_order(ArrayList<PointPair>* arr, PointPair p) {
     int i{0};
     while (i < static_cast<int>(arr->size())) {
         if (p == (*arr)[i]) return;  // if we have this point already, ignore
+        // iterate until we find a point to insert this point after
         if (p.distance < (*arr)[i].distance) {
             arr->insert(i, p);
             return;
@@ -94,6 +95,9 @@ ArrayList<PointPair>* arraylist_merge(ArrayList<PointPair>* list1,
     ArrayList<PointPair>* new_list{new ArrayList<PointPair>(m)};
     int i{0};
     int j{0};
+
+    // put elements in to new list until new list is full or one of the source
+    // lists is empty
     while (i < static_cast<int>(list1->size()) &&
            j < static_cast<int>(list2->size()) &&
            static_cast<int>(new_list->size()) <= m) {
@@ -106,12 +110,14 @@ ArrayList<PointPair>* arraylist_merge(ArrayList<PointPair>* list1,
         }
     }
 
+    // continue filling list until full or list1 is empty
     while (i < static_cast<int>(list1->size()) &&
            static_cast<int>(new_list->size()) <= m) {
         new_list->insert(new_list->size(), (*list1)[i]);
         i++;
     }
 
+    // continue fill list until fill or list2 is empty
     while (j < static_cast<int>(list2->size()) &&
            static_cast<int>(new_list->size()) <= m) {
         new_list->insert(new_list->size(), (*list2)[j]);
