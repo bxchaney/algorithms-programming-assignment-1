@@ -29,4 +29,4 @@ uint32_t get_hash(uint16_t x, uint16_t y);
 ///
 /// where each value is between 0 and 65535, and each line contains two integers
 /// delimited by a single comma.
-void read_points(std::ifstream& is, Queue<Point<uint16_t>>* queue);
+void read_points(std::ifstream& is, ArrayQueue<Point<uint16_t>>* queue);
