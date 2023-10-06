@@ -46,7 +46,19 @@ int main(int argc, char** argv) {
 
     Point<uint16_t>* p{q.to_array()};
 
-    get_closest_points(p, (int)q.size());
+    //    get_closest_points(p, (int)q.size());
+
+    ArrayList<PointPair>* pp{
+        divide_and_conquer_closest_pairs(p, static_cast<int>(q.size()), 10)};
+
+    std::cout << pp->size() << std::endl;
+    for (int i = 0; i < static_cast<int>(pp->size()); i++) {
+        Point<uint16_t> p1{pp->_arr[i].first};
+        Point<uint16_t> p2{pp->_arr[i].second};
+        double dist{pp->_arr[i].distance};
+        std::cout << p1 << " " << p2 << " " << dist << std::endl;
+    }
 
     delete[] p;
+    delete pp;
 }
