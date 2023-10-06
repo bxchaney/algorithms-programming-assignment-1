@@ -39,7 +39,7 @@ int read_input(int argc, char** argv) {
         return -1;
     }
 
-    Queue<Point<uint16_t>> q{};
+    ArrayQueue<Point<uint16_t>> q{};
 
     read_points(ifs, &q);
 
@@ -50,6 +50,38 @@ int read_input(int argc, char** argv) {
 
     delete p;
     return 0;
+}
+
+void test_arrayqueue() {
+    ArrayQueue<int> q{4};
+
+    for (int i = 0; i < 100; i++) {
+        q.enqueue(i);
+    }
+
+    int* p{q.to_array()};
+
+    for (int i = 0; i < (int)q.size(); i++) {
+        std::cout << p[i] << " ";
+    }
+    std::cout << std::endl;
+
+    while (static_cast<int>(q.size()) > 10) {
+        q.dequeue();
+    }
+
+    q.enqueue(10);
+    q.enqueue(69);
+    q.enqueue(420);
+
+    int* r{q.to_array()};
+    for (int i = 0; i < (int)q.size(); i++) {
+        std::cout << r[i] << " ";
+    }
+    std::cout << std::endl;
+
+    delete[] p;
+    delete[] r;
 }
 
 int main(int argc, char** argv) {
@@ -129,4 +161,5 @@ int main(int argc, char** argv) {
     }
 
     read_input(argc, argv);
+    test_arrayqueue();
 }
