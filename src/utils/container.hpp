@@ -222,13 +222,57 @@ class Queue {
     /// @param os an ostream.
     /// @param q a Queue<T>.
     /// @return os.
-    template <typename U>
-    friend std::ostream &operator<<(std::ostream &os, Queue<U> &q) {
-        Node<U> *current = q._head;
+    friend std::ostream &operator<<(std::ostream &os, Queue<T> &q) {
+        Node<T> *current = q._head;
         while (current) {
             os << current->data << std::endl;
             current = current->next;
         }
         return os;
     }
+};
+
+template <typename T>
+class ArrayList {
+    using value_type = T;
+    using pointer_type = T *;
+
+    size_t _size;
+    size_t _max_size;
+
+ public:
+    pointer_type _arr;
+    ArrayList() = default;
+
+    explicit ArrayList(int n) {
+        _arr = new value_type[n];
+        _size = 0;
+        _max_size = n;
+    }
+
+    ~ArrayList() { delete[] _arr; }
+
+    value_type operator[](int i) const {
+        if (i < 0 || i >= static_cast<int>(_size)) {
+            throw std::exception();
+        }
+        return _arr[i];
+    }
+
+    void insert(int i, value_type value) {
+        if (i > static_cast<int>(_size)) throw std::exception();
+        if (_size < _max_size) {
+            _size++;
+        } else if (i == static_cast<int>(_size)) {
+            return;  // if list is full and attempts to insert to the end
+        }
+        for (int j = _size - 1; j > i; j--) {
+            _arr[j] = _arr[j - 1];
+        }
+        _arr[i] = value;
+    }
+
+    size_t size() { return _size; }
+
+    size_t max_size() { return _max_size; }
 };
