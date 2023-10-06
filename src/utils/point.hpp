@@ -56,8 +56,13 @@ class Point {
         return *this;
     }
 
-    template <typename U>
-    friend std::ostream &operator<<(std::ostream &os, Point<U> &p) {
+    bool operator==(const Point &other) {
+        return (x == other.x) && (y == other.y);
+    }
+
+    bool operator!=(const Point &other) { return !(*this == other); }
+
+    friend std::ostream &operator<<(std::ostream &os, Point<T> &p) {
         return os << "( " << p.x << ", " << p.y << " )";
     }
 };
