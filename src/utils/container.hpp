@@ -349,4 +349,12 @@ class ArrayList {
     size_t size() { return _size; }
 
     size_t max_size() { return _max_size; }
+
+    pointer_type to_array() {
+        pointer_type new_arr{new value_type[_size]};
+        for (int i=0; i < static_cast<int>(_size); i++) {
+            new_arr[i] = _arr[i];
+        }
+        return new_arr;
+    }
 };
