@@ -98,10 +98,10 @@ ArrayList<PointPair>* arraylist_merge(ArrayList<PointPair>* list1,
            j < static_cast<int>(list2->size()) &&
            static_cast<int>(new_list->size()) <= m) {
         if ((*list1)[i].distance <= (*list2)[j].distance) {
-            new_list->insert(new_list->size(), (*list1)[i]);
+            insert_in_order(new_list, (*list1)[i]);
             i++;
         } else {
-            new_list->insert(new_list->size(), (*list2)[j]);
+            insert_in_order(new_list, (*list2)[j]);
             j++;
         }
     }
@@ -139,7 +139,8 @@ ArrayList<PointPair>* combine(ArrayList<PointPair>* p_l,
                               ArrayList<PointPair>* p_r, Point<uint16_t>* y,
                               int arr_size, uint16_t line, int m) {
     ArrayList<PointPair>* p{arraylist_merge(p_l, p_r, m)};
-    Queue<Point<uint16_t>> q{};
+    ArrayQueue<Point<uint16_t>> q{};
+
     double delta{std::min((*p_l)[p_l->size() - 1].distance,
                           (*p_r)[p_r->size() - 1].distance)};
     double u_bound{static_cast<int>(line) + delta};
@@ -171,21 +172,26 @@ ArrayList<PointPair>* divide(Point<uint16_t>* x, int x_size, Point<uint16_t>* y,
                              int y_size, int m) {
     // base case is when we have a small enough subset that the total number
     // of possible point pairs is less than m or less than 3
-    if (x_size <= 3 || ((x_size * (x_size - 1)) / 2 <= m)) {
+    
+    unsigned long long x_size_big{static_cast<unsigned long long>(x_size)};
+
+    if (x_size <= 3 
+        || (x_size <= m) 
+        || ( ((x_size_big * (x_size_big - 1)) / 2) <= static_cast<u_int64_t>(m)))
+         {
         return conquer(x, x_size, m);
     }
 
     // divide problem space
-    int k{x_size / 2};
+    int k{(x_size - 1) / 2};
 
-    Queue<Point<uint16_t>> l{};
-    Queue<Point<uint16_t>> r{};
-    Queue<Point<uint16_t>> l_y{};
-    Queue<Point<uint16_t>> r_y{};
+    ArrayQueue<Point<uint16_t>> l{};
+    ArrayQueue<Point<uint16_t>> r{};
+    ArrayQueue<Point<uint16_t>> l_y{};
+    ArrayQueue<Point<uint16_t>> r_y{};
 
     uint16_t line{x[k].x};
-    // std::cout << "x_size: " << x_size << ", y_size: " << y_size
-    //           << ", line: " << line << std::endl;
+
     for (int i = 0; i < x_size; i++) {
         if (x[i].x == line) {
             l.enqueue(x[i]);
@@ -206,6 +212,11 @@ ArrayList<PointPair>* divide(Point<uint16_t>* x, int x_size, Point<uint16_t>* y,
         } else {
             r_y.enqueue(y[i]);
         }
+    }
+
+    // not actually dividing in to smaller sub-problems because of the line choice
+    if (static_cast<int>(l.size()) == x_size || static_cast<int>(r.size()) == x_size) {
+        return conquer(x, x_size, m);
     }
 
     Point<uint16_t>* x_l{l.to_array()};
@@ -243,7 +254,7 @@ ArrayList<PointPair>* divide_and_conquer_closest_pairs(Point<uint16_t>* p,
     // sort x and y
     merge_sort<Point<uint16_t>>(x, 0, arr_size - 1, &sort_by_x);
     merge_sort<Point<uint16_t>>(y, 0, arr_size - 1, &sort_by_y);
-    std::cout << std::endl;
+
     ArrayList<PointPair>* pp{divide(x, arr_size, y, arr_size, m)};
     return pp;
 }
