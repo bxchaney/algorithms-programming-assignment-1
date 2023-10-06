@@ -50,7 +50,7 @@ void get_closest_points(Point<uint16_t>* point_arr,
     calc_distances(&q, point_arr, arr_size);
     PointPair* pp{q.to_array()};
     merge_sort(pp, 0, q.size() - 1, &cmp);
-    for (int i = 0; i < (int)q.size(); i++) {
+    for (int i = 0; i < static_cast<int>(q.size()); i++) {
         std::cout << pp[i].first << " " << pp[i].second << pp[i].distance
                   << std::endl;
     }
@@ -172,13 +172,11 @@ ArrayList<PointPair>* divide(Point<uint16_t>* x, int x_size, Point<uint16_t>* y,
                              int y_size, int m) {
     // base case is when we have a small enough subset that the total number
     // of possible point pairs is less than m or less than 3
-    
-    unsigned long long x_size_big{static_cast<unsigned long long>(x_size)};
 
-    if (x_size <= 3 
-        || (x_size <= m) 
-        || ( ((x_size_big * (x_size_big - 1)) / 2) <= static_cast<u_int64_t>(m)))
-         {
+    uint64_t x_size_big{static_cast<uint64_t>(x_size)};
+
+    if (x_size <= 3 || (x_size <= m) ||
+        (((x_size_big * (x_size_big - 1)) / 2) <= static_cast<u_int64_t>(m))) {
         return conquer(x, x_size, m);
     }
 
@@ -214,8 +212,10 @@ ArrayList<PointPair>* divide(Point<uint16_t>* x, int x_size, Point<uint16_t>* y,
         }
     }
 
-    // not actually dividing in to smaller sub-problems because of the line choice
-    if (static_cast<int>(l.size()) == x_size || static_cast<int>(r.size()) == x_size) {
+    // not actually dividing in to smaller sub-problems because of the line
+    // choice
+    if (static_cast<int>(l.size()) == x_size ||
+        static_cast<int>(r.size()) == x_size) {
         return conquer(x, x_size, m);
     }
 
@@ -224,10 +224,10 @@ ArrayList<PointPair>* divide(Point<uint16_t>* x, int x_size, Point<uint16_t>* y,
     Point<uint16_t>* y_l{l_y.to_array()};
     Point<uint16_t>* y_r{r_y.to_array()};
 
-    ArrayList<PointPair>* p_l{
-        divide(x_l, (int)l.size(), y_l, (int)l_y.size(), m)};
-    ArrayList<PointPair>* p_r{
-        divide(x_r, (int)r.size(), y_r, (int)r_y.size(), m)};
+    ArrayList<PointPair>* p_l{divide(x_l, static_cast<int>(l.size()), y_l,
+                                     static_cast<int>(l_y.size()), m)};
+    ArrayList<PointPair>* p_r{divide(x_r, static_cast<int>(r.size()), y_r,
+                                     static_cast<int>(r_y.size()), m)};
 
     ArrayList<PointPair>* p{combine(p_l, p_r, y, y_size, line, m)};
 
