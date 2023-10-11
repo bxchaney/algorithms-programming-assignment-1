@@ -291,7 +291,9 @@ class ArrayQueue {
         value_type data{_arr[_front]};
         _front = (_front + 1) % _max_size;
         _size--;
-        if (_size < (_max_size / 4) && (_max_size > 40)) { resize(_max_size / 2);}
+        if (_size < (_max_size / 4) && (_max_size > 40)) {
+            resize(_max_size / 2);
+        }
         return data;
     }
 
@@ -352,7 +354,7 @@ class ArrayList {
 
     pointer_type to_array() {
         pointer_type new_arr{new value_type[_size]};
-        for (int i=0; i < static_cast<int>(_size); i++) {
+        for (int i = 0; i < static_cast<int>(_size); i++) {
             new_arr[i] = _arr[i];
         }
         return new_arr;
