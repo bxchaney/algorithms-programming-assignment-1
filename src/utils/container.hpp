@@ -17,6 +17,19 @@ class ArrayQueue {
     size_t _max_size;
     int _front;
 
+    void resize(int n) {
+        value_pointer new_arr{new value_type[n]};
+        for (int i = 0; i < static_cast<int>(_size); i++) {
+            new_arr[i] = _arr[(_front + i) % _max_size];
+        }
+
+        _max_size = n;
+        _front = 0;
+        value_pointer old_arr{_arr};
+        _arr = new_arr;
+        delete[] old_arr;
+    }
+
  public:
     ArrayQueue() {
         // default allocated space is 20
@@ -33,19 +46,6 @@ class ArrayQueue {
     }
 
     ~ArrayQueue() { delete[] _arr; }
-
-    void resize(int n) {
-        value_pointer new_arr{new value_type[n]};
-        for (int i = 0; i < static_cast<int>(_size); i++) {
-            new_arr[i] = _arr[(_front + i) % _max_size];
-        }
-
-        _max_size = n;
-        _front = 0;
-        value_pointer old_arr{_arr};
-        _arr = new_arr;
-        delete[] old_arr;
-    }
 
     void enqueue(value_type data) {
         if (_size == _max_size) {
