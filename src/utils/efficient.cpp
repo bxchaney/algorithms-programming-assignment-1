@@ -18,7 +18,7 @@ ArrayList<PointPair>* EfficientClosestPairs::arraylist_merge(
     // lists is empty
     while (i < static_cast<int>(list1->size()) &&
            j < static_cast<int>(list2->size()) &&
-           static_cast<int>(new_list->size()) <= m) {
+           static_cast<int>(new_list->size()) < m) {
         _comparisons++;
         if ((*list1)[i].distance <= (*list2)[j].distance) {
             insert_in_order(new_list, (*list1)[i]);
@@ -31,7 +31,7 @@ ArrayList<PointPair>* EfficientClosestPairs::arraylist_merge(
 
     // continue filling list until full or list1 is empty
     while (i < static_cast<int>(list1->size()) &&
-           static_cast<int>(new_list->size()) <= m) {
+           static_cast<int>(new_list->size()) < m) {
         _comparisons++;
         new_list->insert(new_list->size(), (*list1)[i]);
         i++;
@@ -39,7 +39,7 @@ ArrayList<PointPair>* EfficientClosestPairs::arraylist_merge(
 
     // continue fill list until fill or list2 is empty
     while (j < static_cast<int>(list2->size()) &&
-           static_cast<int>(new_list->size()) <= m) {
+           static_cast<int>(new_list->size()) < m) {
         _comparisons++;
         new_list->insert(new_list->size(), (*list2)[j]);
         j++;
@@ -55,8 +55,8 @@ ArrayList<PointPair>* EfficientClosestPairs::combine(ArrayList<PointPair>* p_l,
     ArrayList<PointPair>* p{arraylist_merge(p_l, p_r, m)};
     ArrayQueue<Point<double>> q{};
 
-    double delta{std::min((*p_l)[p_l->size() - 1].distance,
-                          (*p_r)[p_r->size() - 1].distance)};
+    double delta{(*p)[p->size()-1].distance};
+
     double u_bound{static_cast<int>(line) + delta};
     double l_bound{static_cast<int>(line) - delta};
     for (int i = 0; i < arr_size; i++) {
