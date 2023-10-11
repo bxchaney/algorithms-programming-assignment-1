@@ -87,6 +87,7 @@ template <typename T>
 class ArrayList {
     using value_type = T;
     using pointer_type = T *;
+    using reference_type = T &;
 
     size_t _size;
     size_t _max_size;
@@ -103,7 +104,7 @@ class ArrayList {
 
     ~ArrayList() { delete[] _arr; }
 
-    value_type operator[](int i) const {
+    reference_type operator[](int i) const {
         if (i < 0 || i >= static_cast<int>(_size)) {
             throw std::exception();
         }
