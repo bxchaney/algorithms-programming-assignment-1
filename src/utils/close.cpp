@@ -10,7 +10,6 @@
 #include <iostream>
 
 #include "./container.hpp"
-#include "./mergesort.hpp"
 #include "./point.hpp"
 
 using PointPair = PointComparer::PointPair;
