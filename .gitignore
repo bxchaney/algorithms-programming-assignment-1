@@ -39,3 +39,11 @@ pyvenv.cfg
 
 # Ignoring build folder
 build/*
+
+# Ignoring vscode
+.vscode/
+
+# Ignoring clangd cache folder
+.cache/clangd
+
+temp.txt
