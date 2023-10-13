@@ -38,7 +38,7 @@ lib64
 pyvenv.cfg
 
 # Ignoring build folder
-build/*
+build/
 
 # Ignoring vscode
 .vscode/
