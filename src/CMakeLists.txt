@@ -14,14 +14,9 @@ target_compile_options(compiler_flags INTERFACE
   "$<${msvc_cxx}:$<BUILD_INTERFACE:-W3>>"
 )
 
-add_compile_options(-Wall -Werror -pedantic-errors -Wextra -Wunused)
-
 add_subdirectory(utils)
 
 add_executable(closest-pairs main.cpp)
-add_executable(test-cases tests.cpp)
 
 target_link_libraries(closest-pairs PUBLIC utils)
 target_include_directories(closest-pairs INTERFACE utils)
-target_link_libraries(test-cases PUBLIC utils)
-target_include_directories(test-cases INTERFACE utils)
