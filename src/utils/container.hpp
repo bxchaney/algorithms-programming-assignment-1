@@ -1,5 +1,6 @@
 /*
  * Copyright 2023, Brandon Chaney
+ * This module contains general use container types.
  */
 
 #pragma once
@@ -7,6 +8,8 @@
 #include <exception>
 #include <iostream>
 
+/// @brief This is an array-based implemenation of the queue abstract data type.
+/// @tparam T 
 template <typename T>
 class ArrayQueue {
     using value_type = T;
@@ -47,6 +50,8 @@ class ArrayQueue {
 
     ~ArrayQueue() { delete[] _arr; }
 
+    /// @brief Adds the data to the back of the queue.
+    /// @param data 
     void enqueue(value_type data) {
         if (_size == _max_size) {
             resize(_max_size * 2);
@@ -61,6 +66,8 @@ class ArrayQueue {
         _size++;
     }
 
+    /// @brief returns the value from the front of the queue.
+    /// @return 
     value_type dequeue() {
         if (_size == 0) throw std::exception();
         value_type data{_arr[_front]};
@@ -74,6 +81,9 @@ class ArrayQueue {
 
     size_t size() { return _size; }
 
+    /// @brief Copies the contents of the queue to an array. This method
+    /// gives the caller ownership of the returned array.
+    /// @return 
     value_pointer to_array() {
         value_pointer p{new value_type[_size]};
         for (int i = 0; i < static_cast<int>(_size); i++) {
@@ -83,6 +93,8 @@ class ArrayQueue {
     }
 };
 
+/// @brief Array-based list
+/// @tparam T 
 template <typename T>
 class ArrayList {
     using value_type = T;
@@ -111,6 +123,9 @@ class ArrayList {
         return _arr[i];
     }
 
+    /// @brief insert a new value in front of index i
+    /// @param i 
+    /// @param value 
     void insert(int i, value_type value) {
         if (i > static_cast<int>(_size)) throw std::exception();
         if (_size < _max_size) {
@@ -128,6 +143,9 @@ class ArrayList {
 
     size_t max_size() { return _max_size; }
 
+    /// @brief copies the contents of the list to an array. This method
+    /// gives the caller ownership of the returned array.
+    /// @return 
     pointer_type to_array() {
         pointer_type new_arr{new value_type[_size]};
         for (int i = 0; i < static_cast<int>(_size); i++) {

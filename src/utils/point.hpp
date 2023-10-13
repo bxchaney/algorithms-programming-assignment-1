@@ -20,6 +20,9 @@ class Point {
 
     Point() = default;
 
+    /// @brief Constructor for Point
+    /// @param x 
+    /// @param y 
     Point(value_type x, value_type y) {
         this->x = x;
         this->y = y;

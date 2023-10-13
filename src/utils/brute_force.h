@@ -8,6 +8,7 @@
 #include "./container.hpp"
 #include "./point.hpp"
 
+/// @brief This class is essentially a wrapper for PointComparer's conquer method.
 class BruteForceClosestPairs : public PointComparer {
  public:
     BruteForceClosestPairs() : PointComparer() {}

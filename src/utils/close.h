@@ -8,6 +8,9 @@
 #include "./container.hpp"
 #include "./point.hpp"
 
+/// @brief The parent class of point comparisons methods. This class has the
+/// PointPair struct as a member, as well as the conquer and insert_in_order
+/// methods. This class is not expected to be instantiated.
 class PointComparer {
  protected:
     uint32_t _comparisons;

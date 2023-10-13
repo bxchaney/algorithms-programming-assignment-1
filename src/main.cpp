@@ -30,6 +30,10 @@ int cast_char_arr_to_int(char* str) {
     return n;
 }
 
+/// @brief This function generates a trace run of the program.
+/// @param p 
+/// @param arr_size 
+/// @param m 
 void trace_run(Point<double>* p, int arr_size, int m) {
     BruteForceClosestPairs brute_force{};
     EfficientClosestPairs efficient{};
@@ -94,12 +98,14 @@ int main(int argc, char** argv) {
         return -1;
     }
 
+    // cast arg # 3 to an integer value
     int n{cast_char_arr_to_int(argv[2])};
 
     ArrayQueue<Point<double>> q{};
 
     read_points(ifs, &q);
 
+    // error handling
     Point<double>* p{q.to_array()};
     uint64_t dataset_size{q.size()};
     uint64_t max_m{((dataset_size - 1) * dataset_size) / 2};
@@ -115,10 +121,12 @@ int main(int argc, char** argv) {
         return -1;
     }
 
+
     // trace run to compare brute force and efficient
     if (argc == 3) {
         trace_run(p, static_cast<int>(q.size()), n);
     } else {
+        // generating a csv output     
         int run_type{cast_char_arr_to_int(argv[3])};
 
         if (run_type == 0) {

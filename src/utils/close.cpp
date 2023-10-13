@@ -14,6 +14,10 @@
 
 using PointPair = PointComparer::PointPair;
 
+/// @brief This method inserts the PointPair p to its in-order place in arr,
+/// if it should be there.
+/// @param arr 
+/// @param p 
 void PointComparer::insert_in_order(ArrayList<PointPair>* arr, PointPair p) {
     // if the array list is empty, inster to the beginning
     _comparisons++;
@@ -55,6 +59,13 @@ void PointComparer::insert_in_order(ArrayList<PointPair>* arr, PointPair p) {
     }
 }
 
+/// @brief This is the brute-force comparisons of all points in p to all other
+/// points. This method gives the caller ownership of the returned ArrayList 
+/// containing the m closest pairs of points.
+/// @param p 
+/// @param arr_size 
+/// @param m 
+/// @return 
 ArrayList<PointPair>* PointComparer::conquer(Point<double>* p, int arr_size,
                                              int m) {
     ArrayList<PointPair>* arr{new ArrayList<PointPair>(m)};

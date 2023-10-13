@@ -6,8 +6,16 @@
 
 #include <math.h>
 
+// convenience
 using PointPair = PointComparer::PointPair;
 
+/// @brief This method merges two sorted lists in to a new sorted list with
+/// length no larger than m. This method creates a new ArrayList and gives
+/// the caller ownership of that ArrayList.
+/// @param list1 
+/// @param list2 
+/// @param m 
+/// @return 
 ArrayList<PointPair>* EfficientClosestPairs::arraylist_merge(
     ArrayList<PointPair>* list1, ArrayList<PointPair>* list2, int m) {
     ArrayList<PointPair>* new_list{new ArrayList<PointPair>(m)};
@@ -47,6 +55,17 @@ ArrayList<PointPair>* EfficientClosestPairs::arraylist_merge(
     return new_list;
 }
 
+/// @brief This method combines the results of the left and right sub-problems
+/// and then considers any pairs of points that may straddle the dividing line.
+/// This method recieves ownership of an array list in its call to arraylist_merge.
+/// This method then passes ownership of that arraylist to the calling function.
+/// @param p_l 
+/// @param p_r 
+/// @param y 
+/// @param arr_size 
+/// @param line 
+/// @param m 
+/// @return 
 ArrayList<PointPair>* EfficientClosestPairs::combine(ArrayList<PointPair>* p_l,
                                                      ArrayList<PointPair>* p_r,
                                                      Point<double>* y,
@@ -59,6 +78,8 @@ ArrayList<PointPair>* EfficientClosestPairs::combine(ArrayList<PointPair>* p_l,
 
     double u_bound{static_cast<int>(line) + delta};
     double l_bound{static_cast<int>(line) - delta};
+    
+    // points near the line
     for (int i = 0; i < arr_size; i++) {
         _comparisons++;
         if (y[i].x >= l_bound && y[i].x <= u_bound) {
@@ -83,6 +104,16 @@ ArrayList<PointPair>* EfficientClosestPairs::combine(ArrayList<PointPair>* p_l,
     return p;
 }
 
+/// @brief This method recursively divides the problem space until the base case.
+/// Then, it combines the results of the two halves and returns the closest pairs
+/// of points. This method gives the caller ownership of the ArrayList referenced
+/// by the returned pointer.
+/// @param x 
+/// @param x_size 
+/// @param y 
+/// @param y_size 
+/// @param m 
+/// @return 
 ArrayList<PointPair>* EfficientClosestPairs::divide(Point<double>* x,
                                                     int x_size,
                                                     Point<double>* y,
@@ -108,6 +139,7 @@ ArrayList<PointPair>* EfficientClosestPairs::divide(Point<double>* x,
 
     double line{x[k].x};
 
+    // split x into left and right
     for (int i = 0; i < x_size; i++) {
         _comparisons++;
         if (x[i].x == line) {
@@ -122,6 +154,7 @@ ArrayList<PointPair>* EfficientClosestPairs::divide(Point<double>* x,
         }
     }
 
+    // split y into left and right
     for (int i = 0; i < y_size; i++) {
         _comparisons++;
         if (y[i].x == line) {
@@ -166,6 +199,13 @@ ArrayList<PointPair>* EfficientClosestPairs::divide(Point<double>* x,
     return p;
 }
 
+/// @brief standard implementation of mergesort. This implementation was
+/// inspired by the one found here: https://www.sortvisualizer.com/mergesort/
+/// @param arr 
+/// @param l 
+/// @param m 
+/// @param r 
+/// @param x_or_y 
 void EfficientClosestPairs::merge(Point<double>* arr, int l, int m, int r,
                                   int x_or_y) {
     bool (EfficientClosestPairs::*leq)(Point<double>*, Point<double>*);
@@ -220,6 +260,13 @@ void EfficientClosestPairs::merge(Point<double>* arr, int l, int m, int r,
     delete[] rarr;
 }
 
+/// @brief standard implementation of mergesort. This implementation was
+/// inspired by the one found here: https://www.sortvisualizer.com/mergesort/
+/// @param arr 
+/// @param arr 
+/// @param l 
+/// @param r 
+/// @param x_or_y 
 void EfficientClosestPairs::merge_sort(Point<double>* arr, int l, int r,
                                        int x_or_y) {
     _comparisons++;
@@ -231,6 +278,10 @@ void EfficientClosestPairs::merge_sort(Point<double>* arr, int l, int r,
     }
 }
 
+/// @brief helper method for sorting by x
+/// @param a 
+/// @param b 
+/// @return 
 bool EfficientClosestPairs::sort_by_x(Point<double>* a, Point<double>* b) {
     _comparisons += 2;
     if (a->x == b->x) {
@@ -239,6 +290,10 @@ bool EfficientClosestPairs::sort_by_x(Point<double>* a, Point<double>* b) {
     return a->x < b->x;
 }
 
+/// @brief helper method for sorting by y
+/// @param a 
+/// @param b 
+/// @return 
 bool EfficientClosestPairs::sort_by_y(Point<double>* a, Point<double>* b) {
     _comparisons += 2;
     if (a->y == b->y) {
@@ -247,6 +302,14 @@ bool EfficientClosestPairs::sort_by_y(Point<double>* a, Point<double>* b) {
     return a->y < b->y;
 }
 
+/// @brief this method returns a pointer to an ArrayList containing the m
+/// closest pairs of points in p. This method yields ownership of the ArrayList
+// referenced by that pointer. This method gives the caller ownership of the
+/// ArrayList referenced by the returned pointer.
+/// @param p 
+/// @param arr_size 
+/// @param m 
+/// @return 
 ArrayList<PointPair>* EfficientClosestPairs::divide_and_conquer_closest_pairs(
     Point<double>* p, int arr_size, int m) {
     // copy p into x and y

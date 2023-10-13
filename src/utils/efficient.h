@@ -1,5 +1,7 @@
 /*
  * Copyright 2023, Brandon Chaney
+ * This module contains the implementation of the divide and conquer algorithm
+ * for finding the closest pairs of points in a set of points.
  */
 
 #pragma once
