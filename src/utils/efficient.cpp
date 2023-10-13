@@ -94,7 +94,7 @@ ArrayList<PointPair>* EfficientClosestPairs::divide(Point<double>* x,
 
     _comparisons += 3;
     if (x_size <= 3 || (x_size <= m) ||
-        (((x_size_big * (x_size_big - 1)) / 2) <= static_cast<u_int64_t>(m))) {
+        (((x_size_big * (x_size_big - 1)) / 2) <= static_cast<uint64_t>(m))) {
         return conquer(x, x_size, m);
     }
 
