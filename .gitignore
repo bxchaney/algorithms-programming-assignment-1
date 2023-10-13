@@ -45,5 +45,6 @@ build/*
 
 # Ignoring clangd cache folder
 .cache/clangd
+data/exp
 
 temp.txt
