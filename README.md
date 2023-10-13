@@ -36,6 +36,8 @@ cd ..
 
 - The compiled executable should now be ready at ./build/closest-pairs !
 
+- It is also possible to build with the VS Code Cmake extension.
+
 ## How to Run
 
 - Once the executable is built we can run the program by calling `./build/closest-pairs` from the command line. This program also expects the filepath of a data file as the second argument and the value for `m` as the third command line argument. The resulting output to the console is a comparison of the results between the brute force and efficient methods.
