@@ -262,5 +262,9 @@ ArrayList<PointPair>* EfficientClosestPairs::divide_and_conquer_closest_pairs(
     merge_sort(y, 0, arr_size - 1, 1);
 
     ArrayList<PointPair>* pp{divide(x, arr_size, y, arr_size, m)};
+
+    delete[] x;
+    delete[] y;
+
     return pp;
 }
